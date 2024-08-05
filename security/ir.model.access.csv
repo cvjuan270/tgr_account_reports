@@ -1,0 +1,4 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_diary_book_manager,diary_book_manager,model_diary_book,,1,1,1,1
+access_format_51_manager,format_51_manager,model_format_51,,1,1,1,1
+access_format_mixin_manager,format_mixin_manager,model_format_mixin,,1,1,1,1

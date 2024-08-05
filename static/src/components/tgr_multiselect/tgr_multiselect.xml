@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="tgr_account_reports.TgrMultiselect" owl="1">
+        <div class="form-control">
+            <div class="dropdown">
+                <span class="dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    t-out="state.label" />
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li class="sticky-top bg-light">
+                        <input class="form-check-input" type="checkbox" t-att-checked="state.selectAll"
+                            t-on-change="toggleSelectAll" />
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Seleccionar todo
+                        </label>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <div style="max-height: 200px; overflow-y: auto;">
+                        <li t-foreach="state.options" t-as="o" t-key="o.id">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" t-att-id="o.id"
+                                    t-att-checked="o.selected" t-on-change="()=>this.toggleOption(o.id)" />
+                                <label class="form-check-label" for="flexCheckDefault" t-esc="o.name" />
+                            </div>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </t>
+</templates>

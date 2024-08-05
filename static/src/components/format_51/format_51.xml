@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="tgr_account_reports.Format51" owl="1">
+        <div class="tax-report-widget container-fluid py-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary">
+                    <h3 class="card-title mb-0 text-white">Formato 5.1 - Libro Diario</h3>
+                </div>
+                <div class="card-body overflow-y-auto">
+                    <div class="filters mb-4">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label for="inputStartDate" class="form-label">Fecha Desde</label>
+                                <input type="date" class="form-control" t-model="state.startDate"/>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="inputEndDate" class="form-label">Fecha Hasta</label>
+                                <input type="date" class="form-control" t-model="state.endDate"/>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Diarios Contables</label>
+                                <TgrMultiselect options="state.journals" placeholder="'Seleccionar Diarios'" onSelectionChange.bind="handleSelectionChangeJournals"/>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end">
+                                <button class="btn btn-primary w-100" t-on-click="fetchReport">
+                                    <i class="fa fa-refresh me-2"></i>Generar Reporte
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div t-if="state.loading" class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando....</span>
+                            </div>
+                            <p class="mt-2">Generando reporte, por favor espere...</p>
+                        </div>
+                        <div class="print-report" id="pdf_report">
+                            <div class="print-section">
+                                <h4>FORMATO 5.1 - LIBRO DIARIO</h4>
+                                <p>PERIODO: <span t-out="state.startDate"/> AL <span t-out="state.endDate"/></p>
+                                <p>RUC: <span/></p>
+                                <p>APELLIDOS Y NOMBRES, DENOMINACIÓN O RAZÓN SOCIAL: <span /></p>
+                            </div>
+                            <div t-if="state.moveLines.length">
+                                <table class="table-tgr" id="table_print">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="th-tgr">NÚMERO CORRELATIVO<br/>DEL ASIENTO<br/>O CÓDIGO ÚNICO<br/>DE LA OPERACIÓN</th>
+                                            <th rowspan="2" class="th-tgr">FECHA<br/>DE LA<br/>OPERACIÓN</th>
+                                            <th rowspan="2" class="th-tgr">GLOSA O<br/>DESCRIPCIÓN DE<br/>LA OPERACIÓN</th>
+                                            <th colspan="3" class="th-tgr">REFERENCIA DE LA OPERACIÓN</th>
+                                            <th colspan="2" class="th-tgr">CUENTA CONTABLE ASOCIADA A LA OPERACIÓN</th>
+                                            <th colspan="2" class="th-tgr">MOVIMIENTO</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center th-tgr">CÓDIGO DEL LIBRO<br/>O REGISTRO<br/>(TABLA 8)</th>
+                                            <th class="text-center th-tgr">NÚMERO<br/>CORRELATIVO</th>
+                                            <th class="text-center th-tgr">NÚMERO DEL<br/>DOCUMENTO<br/>SUSTENTATORIO</th>
+                                            <th class="text-center th-tgr">CÓDIGO</th>
+                                            <th class="text-center th-tgr">DENOMINACIÓN</th>
+                                            <th class="text-center th-tgr">DEBE</th>
+                                            <th class="text-center th-tgr">HABER</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="state.moveLines" t-as="line" t-key="line_index">
+                                            <tr class="tr-tgr">
+                                                <td class="text-center"><span t-out="line.correlative_number"/></td>
+                                                <td class="date"><span t-out="getFormatDate(line.date)"/></td>
+                                                <td class="text"><span t-out="line.ref"/></td>
+                                                <td class="text-center"><span t-out="line.cod_book"/></td>
+                                                <td class="number"><span t-out="line.correlative_number_ope"/></td>
+                                                <td class="text"><span t-out="line.document_number"/></td>
+                                                <td class="text"><span t-out="line.account_code"/></td>
+                                                <td class="text"><span t-out="line.account_name"/></td>
+                                                <td class="number"><span t-out="getFormatNumber(line.debit)"/></td>
+                                                <td class="number"><span t-out="getFormatNumber(line.credit)"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                    <tfoot class="table-light fw-bold">
+                                        <tr>
+                                            <td colspan="2">Total</td>
+                                            <td class="text-end"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div t-if="!state.moveLines.length" class="alert alert-info" role="alert">
+                            <i class="fa fa-info-circle me-2"></i>No hay datos disponibles para los criterios seleccionados.
+                        </div>
+                    </div>
+                    <div class="actions mt-4" t-if="state.moveLines.length">
+                        <div class="row">
+                            <!-- <div class="col-md-2">
+                                <button class="btn btn-outline-success w-100 mb-2">
+                                    <i class="fa fa-file-excel-o me-2"></i>Exportar a Excel
+                                </button>
+                            </div> -->
+                            <div class="col-md-2">
+                                <button class="btn btn-outline-danger w-100 mb-2" t-on-click="printPdf">
+                                    <i class="fa fa-file-pdf-o me-2"></i>Imprimir PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

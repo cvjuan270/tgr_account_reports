@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_tgr_account_reports" name="Reportes Tributarios" parent="account.menu_finance_reports" sequence="11"/>
+    <menuitem id="menu_action_format_51" 
+        name="Formato 5.1 - Libro Diario" 
+        parent="tgr_account_reports.menu_tgr_account_reports" 
+        action="tgr_account_reports.action_format_51_client"
+        sequence="1"/>
+</odoo>

@@ -1,0 +1,132 @@
+$primary-color: #333;
+$secondary-color: #f2f2f2;
+$border-color: #ccc;
+$font-size: 0.8rem;
+$font-family: Arial, sans-serif;
+
+.print-report {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra opcional */
+    height: 60vh;
+    overflow-y: auto;
+}
+
+.print-section {
+    width: 100%;
+    position: relative;
+    padding: 0 5px
+}
+
+.table-tgr {
+    font-family: $font-family;
+    font-size: $font-size;
+
+    .th-tgr,.td-tgr {
+        border: 1px solid $border-color;
+        padding: 8px;
+        text-align: center;
+        vertical-align: middle; // Alineación vertical al centro
+    }
+
+    .th-tgr {
+
+        border: 1px solid $border-color; // Borde inferior más grueso
+    }
+    .tr-tgr {
+        border-bottom: 1px solid $border-color; // Borde inferior de cada fila
+    }
+    // tr:nth-child(even) {
+    //     background-color: #fafafa; // Color de fondo para filas pares
+    // }
+
+    // tbody tr:hover {
+    //     background-color: #eaeaea; // Color de fondo al pasar el ratón sobre una fila
+    // }
+
+    width: 100%;
+
+    .number {
+        text-align: right;
+    }
+    .text {
+        text-align: left;
+    }
+    .date {
+        text-align: center;
+    }
+}
+
+
+.o_account_reports_table {
+    width: 100%;
+
+    .number {
+        text-align: right;
+    }
+    .text {
+        text-align: left;
+    }
+    .date {
+        text-align: center;
+    }
+    th {
+        background-color: var(--AccountFinancial-background-color, white);
+        background-clip: padding-box;
+        .subtitle{
+            font-weight:normal;
+        }
+    }
+    .o_account_reports_header_hierarchy {
+        th:not(:first-child) {
+            border-collapse: separate;
+            padding-right: 8px;
+            padding-left: 8px;
+            font-size: 13px;
+            text-align: center;
+        }
+        th:first-child {
+            border: none;
+        }
+    }
+
+    .o_account_report_column_value .o_account_report_line a {
+        color: inherit;
+    }
+}
+
+.table-hover tbody {
+    tr:not(.o_account_reports_level0):hover > td {
+        background-clip: padding-box;
+    }
+
+    // Since, we can't add spacing between rows in a table, this prevents the background to be the full height of the row.
+    tr.o_account_reports_level0:hover > td {
+        background-color: var(--AccountFinancial-background-hover, #F0F0F0) !important;
+        background-repeat: no-repeat;
+        background-image: var(--AccountFinancial-background-linear, #{linear-gradient(#FFF, #FFF), linear-gradient(#F0F0F0, #F0F0F0)});
+        background-size: 100% 26px, 100% 28px;
+    }
+}
+
+.o_account_reports_table {
+    font-size: 12px !important;
+    > tbody > tr {
+        /* fix thead overlapping http://github.com/wkhtmltopdf/wkhtmltopdf/issues/1524 */
+        page-break-inside: avoid;
+        /* Fix extra space in pdf: by overriding the original size of row, the extra space problem is gone */
+        line-height: normal !important;
+        > td {
+            vertical-align: middle;
+        }
+    }
+}
+
+// Estilos adicionales para un reporte financiero
+// body {
+//     font-family: Arial, sans-serif;
+//     background-color: #fff;
+//     color: $primary-color;
+//     margin: 20px;
+//

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_format_51_client" model="ir.actions.client">
+        <field name="name">format_51</field>
+        <field name="tag">tgr_account_reports.action_format_51</field><!-- nombre del owl template-->
+        <field name="target"></field>
+    </record>
+    
+</odoo>

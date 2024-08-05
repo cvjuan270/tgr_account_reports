@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_format_51_view">
+        <t t-set="company" t-value="env.company"/>
+    <t t-call="web.html_container">
+    <t t-call="web.internal_layout">
+        <div class="page">
+
+            <div class="text-center">
+                <h2>Sales Details</h2>
+            </div>
+
+            <table class="table table-sm table-borderless">
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="th-tgr">NÚMERO CORRELATIVO<br/>DEL ASIENTO<br/>O CÓDIGO ÚNICO<br/>DE LA OPERACIÓN</th>
+                        <th rowspan="2" class="th-tgr">FECHA<br/>DE LA<br/>OPERACIÓN</th>
+                        <th rowspan="2" class="th-tgr">GLOSA O<br/>DESCRIPCIÓN DE<br/>LA OPERACIÓN</th>
+                        <th colspan="3" class="th-tgr">REFERENCIA DE LA OPERACIÓN</th>
+                        <th colspan="2" class="th-tgr">CUENTA CONTABLE ASOCIADA A LA OPERACIÓN</th>
+                        <th colspan="2" class="th-tgr">MOVIMIENTO</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center th-tgr">CÓDIGO DEL LIBRO<br/>O REGISTRO<br/>(TABLA 8)</th>
+                        <th class="text-center th-tgr">NÚMERO<br/>CORRELATIVO</th>
+                        <th class="text-center th-tgr">NÚMERO DEL<br/>DOCUMENTO<br/>SUSTENTATORIO</th>
+                        <th class="text-center th-tgr">CÓDIGO</th>
+                        <th class="text-center th-tgr">DENOMINACIÓN</th>
+                        <th class="text-center th-tgr">DEBE</th>
+                        <th class="text-center th-tgr">HABER</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="move_lines" t-as="l">
+                        <td class="text-center"><span t-esc="l['correlative_number']"/></td>
+                        <td class="date"><span t-esc="l['date']"/></td>
+                        <td class="text"><span t-esc="l['ref']"/></td>
+                        <td class="text-center"><span t-esc="l['cod_book']"/></td>
+                        <td class="text-end"><span t-esc="l['correlative_number_ope']"/></td>
+                        <td class="text"><span t-esc="l['document_number']"/></td>
+                        <td class="text"><span t-esc="l['account_code']"/></td>
+                        <td class="text"><span t-esc="l['account_name']"/></td>
+                        <td class="text-end"><span t-esc="l['debit']"/></td>
+                        <td class="text-end"><span t-esc="l['credit']"/></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    </t>
+        
+    </template>
+
+    <!-- paper format-->
+    <record id="tgr_a_r_format_a4_lasdscape" model="report.paperformat">
+        <field name="name">A4 Landscape</field>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">10</field>
+        <field name="dpi">120</field>
+    </record>
+
+    <record id="action_report_format_51" model="ir.actions.report">
+        <field name="name">Format 51</field>
+        <field name="model">format.51</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tgr_account_reports.report_format_51_view</field>
+        <field name="print_report_name">'%s' % object.name</field>
+        <!-- <field name="binding_model_id" ref="model_format_51']/> -->
+        <!-- <field name="binding_type">report</field> -->
+        <field name="paperformat_id" ref="tgr_a_r_format_a4_lasdscape"/>
+    </record>
+
+
+
+</odoo>
